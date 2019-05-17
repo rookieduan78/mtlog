@@ -97,7 +97,8 @@ public class ShopController {
         Store store= (Store) session.getAttribute("st");
 
         Map<String, Object> paramsMap = new HashMap<String, Object>();
-
+      /*  paramsMap.put("page", pageNumber);
+        paramsMap.put("size", pageSize);*/
         paramsMap.put("orderNo", orderNo);
         paramsMap.put("dateKey", dateKey);
         paramsMap.put("status", status);
