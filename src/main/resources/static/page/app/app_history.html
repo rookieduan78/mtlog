@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title></title>
+<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.3.3/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.3.3/themes/icon.css">
+<script type="text/javascript" src="../jquery-easyui-1.3.3/jquery.min.js"></script>
+<script type="text/javascript" src="../jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="../js/jquery-form.js"></script>
+<script type="text/javascript" src="../js/app_history.js"></script>
+
+</head>
+
+<body>
+	<table id="mainGrid" class="easyui-datagrid" toolbar="#tb" pagination="true">
+		<thead>
+			<tr>
+				<th field="id" hidden="true" align="center" width="280px">id</th>
+				<th field="appName" align="center" width="280px">应用名称</th>
+				<th field="appCode" align="center" width="280px">应用包名</th>
+				<th field="url" align="center" width="280px" formatter="formatterDownLoad">应用包下载</th>
+				<th field="createDate" align="center" width="280px" formatter="formatterDate">发布时间</th>
+			</tr>
+		</thead>
+	</table>
+	<div id="tb">
+		<fieldset style="border: 1px solid #ccc;">
+			<table>
+				<tr>
+					<td style="text-align:right;"><span>应用查询 ：</span></td> 
+					<td><input id="appNameSearch" name="appName" style="line-height: 25px; border: 1px solid #ccc"></td> 
+					<td><a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="searchData(1,10);">搜索</a></td>
+				</tr>
+			</table>
+		</fieldset>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>应用程序管理</title>
+<link rel="stylesheet" type="text/css"
+	href="../jquery-easyui-1.3.3/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css"
+	href="../jquery-easyui-1.3.3/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="../css/common.css">
+<script type="text/javascript"
+	src="../jquery-easyui-1.3.3/jquery.min.js"></script>
+<script type="text/javascript"
+	src="../jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
+<script type="text/javascript"
+	src="../jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript"
+	src="../jquery-easyui-1.3.3/datagrid-groupview.js"></script>
+<script type="text/javascript"
+	src="../jquery-easyui-1.3.3/datagrid-detailview.js"></script>
+<script type="text/javascript" src="../js/jquery-form.js"></script>
+<!--引入外部js文件-->
+<script type="text/javascript" src="../js/authority_list.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/authority_list_set.js"></script>
+<script type="text/javascript" src="../js/grid.js"></script>
+</head>
+<body>
+	<table id="mainGrid" toolbar="#tb" pagination="true"
+	 url="/shuck/web/authority/searchByNameAndCodeAndUnitCodeAndState" 
+		title="DataGrid - SubGrid" singleselect="true" fitcolumns="true">
+		<!-- url="/shuck/web/authority/searchByNameAndCodeAndUnitCodeAndState" -->
+	</table>
+
+	<!-- 处理设置 -->
+	<div id="doSet">
+		<form id="mainForm33" method="post" class="easyui-form">
+			<fieldset>
+				<table>
+					<td id="att"></td>
+				</table>
+			</fieldset>
+		</form>
+	</div>
+
+
+	<div id="tb">
+		<fieldset style="border: 1px solid #ccc;">
+			<table>
+				<tr>
+					<td style="text-align: right;"><span>用户名 ：</span></td>
+					<td><input id="uerNameSearch" name="name"
+						style="line-height: 25px;width:120px; border: 1px solid #ccc" ></td>
+					<td style="text-align: right;"><span>工号 ：</span></td>
+					<td><input id="userCodeSearch" name="code"
+						style="line-height: 25px;width:120px; border: 1px solid #ccc"></td>
+					<td style="text-align: right;"><span>分公司编码 ：</span></td>
+					<td><input id="userUintCodeSearch" name="unitCode"
+						style="line-height: 25px;width:120px; border: 1px solid #ccc"></td>
+				<!-- 		<td style="text-align: right;"><span>P13账号 ：</span></td>
+					<td><input id="cpicuidSearch" name="cpicuid"
+						style="line-height: 25px;width:120px; border: 1px solid #ccc"></td> -->
+					<td>状态 ：</td>
+					<td><select class="easyui-combobox" name="status"
+						id="userStatusSearch" panelHeight="auto"
+						style="line-height: 25px; border: 1px solid #ccc">
+							<option value="2">请选择</option>
+							<option value="0">无效</option>
+							<option value="1" selected = "selected">有效</option>
+					</select></td>
+					<td><a href="#" class="easyui-linkbutton"
+						iconCls="icon-search" plain="true" onclick="searchData(1,10);">搜索</a></td>
+					<!-- <td><span style="display:none"><a href="#" class="easyui-linkbutton" type="hidden"
+						plain="true" onclick="searchDataAll(1,10);">搜索</a></span></td> -->
+				</tr>
+			</table>
+		</fieldset>
+		<div>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-edit"
+				plain="true" onclick="importUser();">批量导入</a>
+		</div>
+	</div>
+
+
+	<!-- 点击增加权限的按钮，弹框 -->
+	<div id="dlg">
+		<table id="datagrid_userlist"></table>
+	</div>
+
+	<!--批量导入-->
+	<div id="importUser">
+		<form action="/shuck/web/authority/analysisExcel" method="post"
+			id="importForm" enctype="multipart/form-data">
+			<input type="hidden" id="impory_groupId" name="groupId">
+			<table align="center">
+				<tr style="height:20px"></tr>
+				<tr>
+					<td><span style="font-size:14px;">模块组:</span><input
+						id="classType" name="classType"
+						style="width: 200px; height: 25px;" /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td><input type="file" id="file" name="file"
+						style="border: 1px solid #ccc; width: 200px; height: 24px;"
+						　 accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"></td>
+					<!-- <td><input type="submit" value="批量导入"></td> -->
+					<hr />
+					<td><a href="/shuck/web/excel/export">下载模板</a></td>
+				</tr>
+			</table>
+		</form>
+		<div id="message" style="display: none;">
+			<font color="red">提示：如下列表数据导入失败！</font>
+		</div>
+		<table id="datagrid_faillist"></table>
+	</div>
+
+	<div id="searchButton">
+		<fieldset style="border: 1px solid #ccc;">
+			<table>
+				<tr>
+					<td style="text-align: right;"><span>工号 ：</span></td>
+					<td><input id="userCodeSearch" name="userCode"
+						style="line-height: 25px; border: 1px solid #ccc"></td>
+					<td style="text-align: right;"><span>分公司 ：</span></td>
+					<td><input id="unitCodeSearch" name="unitCode"
+						style="line-height: 25px; border: 1px solid #ccc"></td>
+					<td><a href="#" class="easyui-linkbutton"
+						iconCls="icon-search" plain="true" onclick="searchUserData(1,10);">搜索</a></td>
+				</tr>
+			</table>
+		</fieldset>
+	</div>
+
+
+
+</body>
+
+</html>

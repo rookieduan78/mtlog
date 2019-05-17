@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>菜单管理</title>
+	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.3.3/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.3.3/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../css/common.css">
+	<script type="text/javascript" src="../jquery-easyui-1.3.3/jquery.min.js"></script>
+	<script type="text/javascript" src="../jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="../js/jquery-form.js"></script>
+	<script type="text/javascript" src="../js/menu_list.js"></script>
+	<script type="text/javascript" src="../js/grid.js"></script>
+</head>
+<body>
+	<table id="mainGrid" toolbar="#tb" pagination="true" fitcolumns="true" singleselect="true" >
+		<thead>
+			<tr>
+				<th field="id" hidden="true" align="center" width="100">id</th>
+				<th field="code" align="center" width="100">菜单编码</th>
+				<th field="name" align="center" width="100">菜单名称</th>
+				<th field="parentId" align="center" width="100">父菜单</th>
+				<th field="parentId2" align="center" hidden="true">父id</th>
+				<th field="rootId" hidden="true" align="center" width="100">根菜单</th>
+				<th field="sort" align="center" hidden="true" width="100">排序</th>
+				<th field="resourceId" align="center" width="100">资源名称</th>
+				<th field="recId2" align="center" hidden="true">资源id</th>
+				<th field="url" align="center" width="100">资源地址</th>
+				<th field="remark" align="center" width="100">备注</th>
+			</tr>
+		</thead>
+	</table>
+	<div id="tb">
+		<fieldset style="border: 1px solid #ccc;">
+			<table>
+				<tr>
+					<td style="text-align:right;"><span>菜单名称 ：</span></td> 
+					<td><input id="appNameSearch" name="appName" style="line-height: 25px; border: 1px solid #ccc"></td> 
+					
+					<td style="text-align:right;"><span>父菜单 ：</span></td> 
+					<td><select class="easyui-combobox" id="parentName" name="parentName" style="line-height: 25px; border: 1px solid #ccc"/>
+					时间：<input id="dd" type="text" class="easyui-datebox" required="required">
+					<td>
+
+					<!--<td style="text-align:right;"><span>日期 ：</span></td>
+					<input id="dd" type="text" class="easyui-datebox" required="required">-->
+
+					<td><a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="searchData(1,10);">搜索</a></td>
+				</tr>
+			</table>
+		</fieldset>
+		<div>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="toAdd();">新增菜单</a> 
+			<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="toUpdate();">修改菜单</a> 
+			<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="doDeleteEntity();">刪除菜单</a> 
+		</div>
+	</div>
+	<div id="menuDialog" >
+		<form id="mainForm" method="post" enctype="multipart/form-data" class="easyui-form"
+		style=margin-left:20%;margin-top:10%>
+ 			<input type="hidden" id="id" name="id" value="" />
+			<table cellpadding="5" >
+			    <tr id="apptr2">
+					<td>菜单编码:</td>
+					<td><input class="easyui-validatebox" type="text" name="code" id="code" data-options="required:true" ></input></td>
+				</tr>
+				<tr>
+					<td>菜单名称:</td>
+					<td><input class="easyui-validatebox" type="text" name="name" id="name" data-options="required:true"></input></td>
+				</tr>
+				<tr id="apptr3">
+					<td>父菜单:</td>
+					<td><input class="easyui-combobox" type="text" name="parentId" id="parentId" ></input></td>
+				</tr>
+				<tr id="apptr4">
+					<td>根菜单:</td>
+					<td><input class="easyui-combobox" type="text" name="rootId" id="rootId" ></input></td>
+				</tr>
+				<tr id="apptr15">
+					<td>排序:</td>
+					<td><input type="text" name="sort" id="sort" class="easyui-numberbox"></input></td>
+				</tr>
+				
+				<tr id="apptr19">
+					<td>资源表id:</td>
+					<td><input class="easyui-combobox" type="text" name="resourceId" id="resourceId" ></input></td>
+				</tr>
+				<tr id="apptr15">
+					<td>备注:</td>
+					<td><textarea name="remark" id="remark" placeholder="(200字以内)" class="easyui-validatebox validatebox-text" cols="30" rows="5"></textarea></td>
+				</tr>
+				<tr id="apptr16">
+					<td><input  type="hidden" name="parentId3" id="parentId3"></input></td>
+				</tr>
+					<tr id="apptr16">
+					<td><input  type="hidden" name="recId" id="recId"></input></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</body>
+	
+</html>

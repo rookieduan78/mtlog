@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>角色列表</title>
+	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.3.3/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.3.3/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../css/common.css">
+	<script type="text/javascript" src="../jquery-easyui-1.3.3/jquery.min.js"></script>
+	<script type="text/javascript" src="../jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" 	src="../jquery-easyui-1.3.3/datagrid-groupview.js"></script>
+	<script type="text/javascript" src="../jquery-easyui-1.3.3/datagrid-detailview.js"></script>
+	<script type="text/javascript" src="../js/jquery-form.js"></script>
+	<script type="text/javascript" src="../js/role_list.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+	<script type="text/javascript" src="../js/grid.js"></script>
+</head>
+<body>
+ 	<!-- 点击设置资源，弹框 -->
+	<div id="adg" >
+		<table id="addDataGrid" ></table>
+	</div> 
+ 	<!-- 点击删除资源，弹框 -->
+	<div id="ddg" >
+		<table id="deleteDataGrid" ></table>
+	</div> 	
+	<table id="mainGrid"  toolbar="#tb"  pagination="true"
+		url="/shuck/web/role/searchRoleInfo" title="DataGrid - SubGrid"
+		singleselect="true" fitcolumns="true">
+		<thead>
+			<tr>
+				<th field="roleId" hidden="true"  width="100">id</th>
+				<th field="name" align="center"  width="100">角色名称22</th>
+				<th field="code" align="center"  width="100">角色编码</th>
+				<th field="sort" align="center"  width="50">排序</th>
+				<th field="status" align="center"  width="50" formatter="formatterData">是否有效</th>
+				<th field="descript" align="center"  width="130">描述</th>
+			</tr>
+		</thead>
+	</table>
+	<div id="tb">
+		<fieldset style="border: 1px solid #ccc;">
+			<table>
+				<tr>
+					<td style="text-align:right;"><span>角色名称 ：</span></td> 
+					<td><input id="appNameSearch" name="appName" style="line-height: 25px; border: 1px solid #ccc"></td> 
+					<td><a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="searchData(1,10);">搜索</a></td>
+				</tr>
+			</table>
+		</fieldset>
+		<div>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="toAdd();">新增角色44</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="toUpdate();">修改角色55</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="doDeleteEntity();">禁用角色66</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="setResource();">设置资源77</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteResource();">删除资源</a> 
+		</div>
+	</div>
+	<div id="dd">
+		<form id="mainForm" method="post" enctype="multipart/form-data" class="easyui-form">
+ 			<input type="hidden" id="roleId" name="roleId" value="" />
+			<table cellpadding="5"  style=margin-left:25%;margin-top:10%>
+			    <tr>
+					<td>角色编码:</td>
+					<td><input class="easyui-validatebox" type="text" name="code" id="code" data-options="required:true"></input></td>
+				</tr>
+				<tr>
+					<td>角色名称:</td>
+					<td><input class="easyui-validatebox" type="text" name="name" id="name" data-options="required:true"></input></td>
+				</tr>
+				<tr id="apptr3">
+					<td>排序:</td>
+					<td><input class="easyui-textbox" type="text" name="sort" id="sort" ></input></td>
+				</tr>
+				<tr id="apptr4">
+					<td>描述:</td>
+					<td><textarea class="easyui-validatebox validatebox-text" cols="30" rows="5"  name="descript" id="descript" placeholder="(250字以内)" ></textarea></td>
+				</tr>
+				<tr id="apptr8">
+					<td>是否有效:</td>
+					<td><input type="radio" name="status" value="1"> 是</input> <input type="radio" name="status" value="0"> 否</input></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<div id="searchButton" style="display:none;">
+		<fieldset style="border: 1px solid #ccc;">
+			<table>
+				<tr>
+					<td style="text-align:right;"><span>编码 ：</span></td> 
+					<td><input id="codeSearch" name="userCode" style="line-height: 25px; border: 1px solid #ccc"></td> 
+					<td style="text-align:right;"><span>名称 ：</span></td> 
+					<td><input id="nameSearch" name="unitCode" style="line-height: 25px; border: 1px solid #ccc"></td> 
+					<td><a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="searchSourceData(1,10);">搜索</a></td>
+				</tr>
+			</table>
+		</fieldset>
+	</div>
+	<div id="searchButtonDelete" style="display:none;">
+		<fieldset style="border: 1px solid #ccc;">
+			<table>
+				<tr>
+					<td style="text-align:right;"><span>编码 ：</span></td> 
+					<td><input id="codeSearchDelete" name="userCode1" style="line-height: 25px; border: 1px solid #ccc"></td> 
+					<td style="text-align:right;"><span>名称 ：</span></td> 
+					<td><input id="nameSearchDelete" name="unitCode1" style="line-height: 25px; border: 1px solid #ccc"></td> 
+					<td><a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="searchSourceDataDelete(1,10);">搜索</a></td>
+				</tr>
+			</table>
+		</fieldset>
+	</div>
+</body>
+	
+</html>

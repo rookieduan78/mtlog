@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.ShopMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.Store" >
+    <constructor >
+      <arg column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="storeCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="storePosword" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="storeName" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+
+  <resultMap id="SendLogResultMap" type="com.entity.SendLog" >
+    <constructor >
+      <arg column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="orderNo" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="sendTime" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="status" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="reason" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="storeCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="storeName" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+
+  <resultMap id="RecordResultMap" type="com.entity.Record" >
+    <constructor >
+      <arg column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="orderNo" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="storeCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="storeName" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="dateKey" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="transTypeName" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="totalAmt" jdbcType="VARCHAR" javaType="java.lang.Double" />
+      <arg column="totalNet" jdbcType="VARCHAR" javaType="java.lang.Double" />
+      <arg column="paymentTypeName" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="orderDetailid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="status" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="sendTime" jdbcType="DATE" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <select id="selectSendLog" resultType="com.entity.SendLog" >
+    select * from SENDLOG s where 1=1
+    <if test="storeName !='' and storeName != null">
+      and  s.STORENAME LIKE  '%${storeName}%'
+    </if>
+    <if test="status !='' and status != null">
+      and  s.STATUS LIKE  '%${status}%'
+    </if>
+  </select>
+
+  <select id="findStore" resultMap="BaseResultMap">
+   SELECT * from STORE s where s.STORECODE=#{storeCode} and s.STOREPOSWORD=#{storePosword}
+  </select>
+
+  <!--<select id="getRecord" resultMap="RecordResultMap" parameterType="Map">-->
+  <select id="getRecord" resultType="com.entity.Record" parameterType="Map">
+    select
+    a.ORDERNO ,a.DATEKEY ,convert(varchar,a.TRANSDATE,20) as TRANSDATE,a.STORECODE,a.STORENAME,a.TRANSTYPECODE,a.TRANSTYPENAME,a.UNITPRICE,
+    a.QUANTITY,a.TOTALAMT,a.TOTALNET,a.PAYMENTTYPE,a.PAYMENTTYPENAME,a.ORDERDETAILID,a.PRODCODE,
+    a.PRODNAME,a.PRODTYPE,
+    b.ID,ISNULL(b.STATUS,0) as STATUS,b.SENDTIME
+    from
+    openquery(CAM,
+    'SELECT * FROM I1_CAM.FACT_SALES WHERE storecode=''${storecode}'' ') a  LEFT JOIN RECORD b on a.ORDERDETAILID=b.ORDERDETAILID
+    where
+    a.TransTypeName in ('消费', '退单') and a.transtypecode = '4' and a.totalnet !='0'
+    <if test="orderNo !='' and orderNo != null">
+     and  a.ORDERNO LIKE  '%${orderNo}%'
+    </if>
+
+    <if test="dateKey !='' and dateKey != null">
+      and  a.DATEKEY like '%${dateKey}%'
+    </if>
+    <if test='status !="" and status != null and status=="1"'>
+      and  b.STATUS ='1'
+    </if>
+    <if test='status !="" and status != null and status=="0"'>
+      and  a.ORDERDETAILID not in (select d.ORDERDETAILID from RECORD d where d.STORECODE=#{storecode})
+    </if>
+  </select>
+
+  <insert id="insertRecord">
+    insert into  Record
+    (
+    ORDERNO,
+    STORECODE,
+    STORENAME,
+    DATEKEY,
+    TRANSTYPENAME,
+    TOTALAMT,
+    TOTALNET,
+    PAYMENTTYPENAME,
+    ORDERDETAILID,
+    STATUS,
+    SENDTIME,
+    TRANSDATE
+    ) values  (
+       #{orderNo},
+       #{storeCode},
+       #{storeName},
+       #{dateKey},
+       #{transTypeName},
+       #{totalAmt},
+       #{totalNet},
+        #{paymentTypeName},
+        #{orderDetailid},
+        '1',
+        #{sendTime},
+        #{transDate,jdbcType=DATE}
+    )
+  </insert>
+
+  <insert id="insertSendLog">
+    insert into  SendLog
+    (
+    ORDERNO,
+    SENDTIME,
+    STATUS,
+    STORECODE,
+    STORENAME
+    ) VALUES
+    (
+    #{orderNo},
+    #{sendTime},
+    #{status},
+    #{storeCode},
+    #{storeName}
+    )
+  </insert>
+
+  <update id="updatePosword">
+    update  STORE
+    set   STOREPOSWORD=#{storeNewPosword}
+   where  STORECODE=#{storeCode}
+  </update>
+</mapper>

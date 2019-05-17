@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>POS后台管理系统</title>
+    <link rel="stylesheet" type="text/css" href="../style/style.css">
+    <link rel="stylesheet" type="text/css" href="../style/widget.css">
+    <link rel="stylesheet" type="text/css" href="../font/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.3.3/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.3.3/themes/icon.css">
+    <script type="text/javascript" src="../jquery-easyui-1.3.3/jquery.min.js"></script>
+    <script type="text/javascript" src="../jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../js/common.js"></script>
+    <script type="text/javascript">
+       $(function() {
+            jQuery("#layout_west_accordion").accordion({ // 初始化accordion
+                fillSpace : true,
+                fit : true,
+                border : true,
+                animate : false
+            });
+
+            $.ajax({
+                type: 'POST',
+                async: false,
+                dataType: "json",
+                url: '/shop/treeNodeInfo',//获取菜单
+                success: function(data) {
+                    $.each(data[0].children, function(i, n) { //加载父类节点即一级菜单
+                        var attr = data[0].children[i];
+                        var id ="111";
+                        var text1 = "aaaa";
+                        $('#layout_west_accordion').accordion('add', {
+                            title: "2222",
+                            iconCls: 'icon-system',
+                            selected: true,
+                            content: '<div style="padding:10px 0px"><ul id="tree' + id + '"></ul></div>',
+                        });
+                        var children = attr.children;
+                        console.log(children);
+                        $.parser.parse();
+                        $("#tree" + id).tree({
+                            data: "aaaa",
+                            animate: true,
+                            //iconCls: icon-blank,
+                            lines: false, //显示虚线效果
+                            onClick: function(node) { // 在用户点击一个子节点即二级菜单时触发addTab()方法,用于添加tabs
+                                if(node) {
+                                    addTab(node);
+                                }
+                            }
+
+                        });
+                    })
+                }
+
+            });
+        });
+
+        //添加标签页/选项卡（相当于一个父tabs，其他的都是添加在这个之上，没有这个下面添加不起tabs）
+        $('#tabs').tabs({
+            border: false,
+            onSelect: function(title) {
+            }
+        });
+
+        function addTab(node) {
+            if($("#tabs").tabs("exists",node.text)){
+                $("#tabs").tabs("select",node.text);
+            } else{
+                //添加选项卡
+                $('#tabs').tabs('add', {
+                    title: node.text,
+                    content: "<iframe frameborder=0 scrolling='auto' style='width:100%;height:100%' src="+node.attributes.url+"'/'></iframe>",
+                    closable: true,
+                    iconCls:'icon-item'
+                });
+            }
+        }
+
+        function signout(){
+            window.location.href= "/login" ;
+         /*   $.ajax({
+                type : "POST",
+                url : "/shop/getLogin",
+                success : function(data) {
+                    window.location.href= "/shuck/admin/login" ;
+                },
+                error : function(err) {
+                }
+            });*/
+        }
+    </script>
+</head>
+
+<body class="easyui-layout">
+<div region="north" id="header" style="height:50px;overflow:hidden;line-height:50px;  background-color:#0058bc;">
+    <div class="logo"><a href="index.html" title="美丽田园">美丽田园</a></div>
+    <div class="user">
+        <p>您好，欢迎您！&nbsp;&nbsp;<a  title="退出" onclick="signout();" style="cursor:pointer">退出</a></p>
+    </div>
+</div>
+<div region="center">
+    <div class="easyui-tabs" fit="true" border="false" id="tabs">
+        <div title="首页" data-options="iconCls:'icon-home'">
+            <div align="center" style="padding-top: 100px"><font color="red" size="10">欢迎使用</font></div>
+        </div>
+    </div>
+</div>
+<div region="west" style="width: 200px" title="菜单" split="true">
+    <div id="layout_west_accordion" class="easyui-accordion" data-options="fit:true,border:false,nimate:false,lines:true"></div>
+    <ul class="nav-menu height-full" id="menu">
+
+        <li class='.special'>
+            <a href="/getLRecordModel">
+                <i class="uf uf-picture"></i>
+                <span class="nav-title" style="color:blue;font-weight:bold; display:block;
+width:150px " >订单管理模块</span>
+            </a>
+        </li>
+        <li class='nav-li'>
+            <a href="/getLModel">
+                <i class="uf uf-role"></i>
+                <span class="nav-title" style="color:blue;font-weight:bold ; display:block;
+width:150px; ">日志记录模块</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div region="south" style="height: 25px;padding: 5px" align="center">
+    POS后台管理系统
+</div>
+
+
+
+</body>
+
+</html>
