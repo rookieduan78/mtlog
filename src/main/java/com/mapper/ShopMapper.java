@@ -26,4 +26,6 @@ public interface ShopMapper {
     void insertSendLog(Record rd);
 
     void updatePosword(@Param("storeCode") String storeCode,@Param("storeNewPosword") String storeNewPosword);
+
+    List<Record> findTodayRecord(@Param("storeCode")  String storeCode);
 }

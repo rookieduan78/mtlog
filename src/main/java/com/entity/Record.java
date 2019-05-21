@@ -14,12 +14,14 @@ public class Record {
     String orderDetailid;
     String status;
     String sendTime;
-    Date transDate;
+    String transDate;
+    String prodCode;
+    String unitprice;
+    String quantity;
     public Record() {
     }
 
-
-    public Record(String id, String orderNo, String storeCode, String storeName, String dateKey, String transTypeName, Double totalAmt, Double totalNet, String paymentTypeName, String orderDetailid, String status, String sendTime, Date transDate) {
+    public Record(String id, String orderNo, String storeCode, String storeName, String dateKey, String transTypeName, Double totalAmt, Double totalNet, String paymentTypeName, String orderDetailid, String status, String sendTime,  String transDate, String prodCode, String unitprice, String quantity) {
         this.id = id;
         this.orderNo = orderNo;
         this.storeCode = storeCode;
@@ -33,13 +35,40 @@ public class Record {
         this.status = status;
         this.sendTime = sendTime;
         this.transDate = transDate;
+        this.prodCode = prodCode;
+        this.unitprice = unitprice;
+        this.quantity = quantity;
     }
 
-    public Date getTransDate() {
+    public String getProdCode() {
+        return prodCode;
+    }
+
+    public void setProdCode(String prodCode) {
+        this.prodCode = prodCode;
+    }
+
+    public String getUnitprice() {
+        return unitprice;
+    }
+
+    public void setUnitprice(String unitprice) {
+        this.unitprice = unitprice;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
+
+    public  String getTransDate() {
         return transDate;
     }
 
-    public void setTransDate(Date transDate) {
+    public void setTransDate( String transDate) {
         this.transDate = transDate;
     }
 

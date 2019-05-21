@@ -15,7 +15,10 @@ public interface ShopService {
 
     List<Record> getRecord(Map<String, Object> paramsMap);
 
-    void sendRecord(String ids);
+    void sendRecord(String ids) throws  Exception;
 
     void updatePosword(String storeCode, String storeNewPosword);
+
+    //查询当天的单子
+    List<Record> findTodayRecord(String storeCode);
 }

@@ -38,4 +38,9 @@ public class ShopDao {
     public void updatePosword(String storeCode, String storeNewPosword) {
         shopMapper.updatePosword(storeCode,storeNewPosword);
     }
+
+    public List<Record> findTodayRecord(String storeCode) {
+        System.out.println(storeCode);
+       return shopMapper.findTodayRecord(storeCode);
+    }
 }

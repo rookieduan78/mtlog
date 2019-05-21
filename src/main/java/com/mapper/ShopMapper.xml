@@ -55,6 +55,7 @@
   <!--<select id="getRecord" resultMap="RecordResultMap" parameterType="Map">-->
   <select id="getRecord" resultType="com.entity.Record" parameterType="Map">
     select
+    a.PRODCODE,a.UNITPRICE,a.QUANTITY,
     a.ORDERNO ,a.DATEKEY ,convert(varchar,a.TRANSDATE,20) as TRANSDATE,a.STORECODE,a.STORENAME,a.TRANSTYPECODE,a.TRANSTYPENAME,a.UNITPRICE,
     a.QUANTITY,a.TOTALAMT,a.TOTALNET,a.PAYMENTTYPE,a.PAYMENTTYPENAME,a.ORDERDETAILID,a.PRODCODE,
     a.PRODNAME,a.PRODTYPE,
@@ -133,4 +134,22 @@
     set   STOREPOSWORD=#{storeNewPosword}
    where  STORECODE=#{storeCode}
   </update>
+
+
+  <select id="findTodayRecord" resultType="com.entity.Record" >
+    select
+     a.PRODCODE,a.UNITPRICE,a.QUANTITY,
+    a.ORDERNO ,a.DATEKEY ,convert(varchar,a.TRANSDATE,20) as TRANSDATE,a.STORECODE,a.STORENAME,a.TRANSTYPECODE,a.TRANSTYPENAME,a.UNITPRICE,
+    a.QUANTITY,a.TOTALAMT,a.TOTALNET,a.PAYMENTTYPE,a.PAYMENTTYPENAME,a.ORDERDETAILID,a.PRODCODE,
+    a.PRODNAME,a.PRODTYPE,
+    b.ID,ISNULL(b.STATUS,0) as STATUS,b.SENDTIME
+    from
+    openquery(CAM,
+    'SELECT * FROM I1_CAM.FACT_SALES WHERE storecode=''${storeCode}'' ') a  LEFT JOIN RECORD b on a.ORDERDETAILID=b.ORDERDETAILID
+    where
+    a.TransTypeName in ('消费', '退单') and a.transtypecode = '4' and a.totalnet !='0'
+    and  a.TRANSDATE &gt;= convert(varchar(10),Getdate(),120)
+    and a.TRANSDATE  &lt;= convert(varchar(10),dateadd(d,1,Getdate()),120)
+  </select>
+
 </mapper>
