@@ -20,7 +20,7 @@ public class JobController {
     @Autowired
     private ShopDao shopdao;
     //@Scheduled(cron="0/10 *  *  * * ? ")
-      @Scheduled(cron="0 30 15 * * ?")
+    //  @Scheduled(cron="0 20 14 * * ?")
     public void testTimer(){
         String storeCode="BF0238";
         System.out.println("第一个定时任务");

@@ -39,7 +39,8 @@ public class ShopController {
         }else{
             HttpSession session = request.getSession();
             session.setAttribute("st", st);
-            session.setMaxInactiveInterval(1*3600*1000);
+            session.setMaxInactiveInterval(30*60);
+            //session.setMaxInactiveInterval(1*3600*1000);
            // session.setTimeout(7*24*3600*1000);// 7天
             flag="2";
         }
