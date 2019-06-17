@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.LogMapper" >
+ <!-- <resultMap id="BaseResultMap" type="com.entity.Store" >
+    <constructor >
+      <arg column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="storeCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="storePosword" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="storeName" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>-->
+  <select id="selectEsbLog" resultType="com.entity.EsbLog" >
+    select * from TEST_WEB s where 1=1
+    <if test="callName !='' and callName != null">
+      and  s.CALLERWEB LIKE  '%${callName}%'
+    </if>
+      <if test="resName !='' and resName != null">
+          and  s.RETURNWEB LIKE  '%${resName}%'
+      </if>
+    <if test="status !='' and status != null">
+      and  s.STATUS LIKE  '%${status}%'
+    </if>
+      <if test="dateKey !='' and dateKey != null">
+          and  s.STARTTIME like '%${dateKey}%'
+      </if>
+  </select>
+</mapper>
