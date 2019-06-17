@@ -100,7 +100,12 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.36</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc7</artifactId>
+            <version>12.2.0.1</version>
+            <scope>runtime</scope>
+        </dependency>
 
     </dependencies>
 
