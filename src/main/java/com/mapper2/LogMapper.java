@@ -1,4 +1,4 @@
-package com.mapper;
+package com.mapper2;
 
 import com.entity.EsbLog;
 import org.apache.ibatis.annotations.Mapper;

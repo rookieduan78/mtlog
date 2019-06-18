@@ -1,7 +1,7 @@
 package com.dao;
 
 import com.entity.EsbLog;
-import com.mapper.LogMapper;
+import com.mapper2.LogMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
