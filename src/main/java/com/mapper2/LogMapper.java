@@ -11,5 +11,6 @@ import java.util.List;
 @Component("LogMapper")
 public interface LogMapper {
         List<EsbLog> selectEsbLog(@Param("callName") String callName,@Param("resName") String resName,
-                                  @Param("dateKey") String dateKey,@Param("status") String status);
+                                  @Param("dateKey") String dateKey,@Param("status") String status,
+                                  @Param("message") String message,@Param("endtime") String endtime);
 }

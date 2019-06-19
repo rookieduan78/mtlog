@@ -109,8 +109,10 @@ function page_init(){
 function searchData(pageNumber, pageSize){
    var resourceName = $('#resourceSearch').val();
    var resourceName2=$('#resourceSearch2').val();
+	var resourceName3=$('#resourceSearch3').val();
    var select_Status	 = $('#select_Status').combobox('getValue').trim();
 	var dateKey = $('#datemer').datebox('getValue');
+	var dateKey2 = $('#datemer2').datebox('getValue');
    $("#mainGrid").datagrid('getPager').pagination({pageSize : pageSize, pageNumber : pageNumber});//重置
    $("#mainGrid").datagrid("loading"); //加屏蔽
    $.ajax({
@@ -120,8 +122,10 @@ function searchData(pageNumber, pageSize){
        data : {
     	   'callName' : resourceName,
 		   'resName' : resourceName2,
+		   'message' : resourceName3,
     	   'status' : select_Status,
 		   'dateKey':dateKey,
+		   'endtime':dateKey2,
     	   'page' : pageNumber,
    			'rows' : pageSize
        },

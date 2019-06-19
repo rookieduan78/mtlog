@@ -13,7 +13,7 @@ public class LogServiceImpl implements LogService {
 @Autowired
 private LogDao logdao;
     @Override
-    public List<EsbLog> selectEsbLog(String callName,String resName,String dateKey,String status) {
-        return logdao.selectEsbLog(callName,resName,dateKey,status);
+    public List<EsbLog> selectEsbLog(String callName,String resName,String dateKey,String status,String message,String endtime) {
+        return logdao.selectEsbLog(callName,resName,dateKey,status,message,endtime);
     }
 }

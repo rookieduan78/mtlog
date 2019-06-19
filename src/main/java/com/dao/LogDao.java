@@ -11,7 +11,7 @@ import java.util.List;
 public class LogDao {
     @Autowired
     private LogMapper logmapper;
-    public List<EsbLog> selectEsbLog(String callName,String resName,String dateKey,String status) {
-        return logmapper.selectEsbLog(callName,resName,dateKey,status);
+    public List<EsbLog> selectEsbLog(String callName,String resName,String dateKey,String status,String message,String endtime) {
+        return logmapper.selectEsbLog(callName,resName,dateKey,status,message,endtime);
     }
 }

@@ -24,10 +24,10 @@ public class LogController {
     //查询所有日志
     @RequestMapping(value = "getEsbLog")
     @ResponseBody
-    public List<EsbLog> getEsbLog(String callName,String resName,String dateKey,String status)
+    public List<EsbLog> getEsbLog(String callName,String resName,String dateKey,String status,String message,String endtime)
     {
         try {
-            List<EsbLog> sendLogList = logService.selectEsbLog(callName,resName,dateKey,status);
+            List<EsbLog> sendLogList = logService.selectEsbLog(callName,resName,dateKey,status,message,endtime);
             return sendLogList;
         }catch (Exception e){
             e.printStackTrace();

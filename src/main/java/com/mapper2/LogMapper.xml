@@ -23,5 +23,13 @@
       <if test="dateKey !='' and dateKey != null">
           and  s.STARTTIME like '%${dateKey}%'
       </if>
+      <if test="endtime !='' and endtime != null">
+          and  s.ENDTIME like '%${endtime}%'
+      </if>
+      <if test="message !='' and message != null">
+          and  (s.REQUESTMESSAGE LIKE  '%${message}%'
+              or  s.RESPONEMESSAGE LIKE  '%${message}%'
+          )
+      </if>
   </select>
 </mapper>
