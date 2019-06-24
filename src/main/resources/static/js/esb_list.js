@@ -1,14 +1,14 @@
 $(document).ready(function() {
 	$.extend($.fn.validatebox.defaults.rules, {
-		number: { 
-		   validator: function (value, param) { 
-		   return /^[0-9]+.?[0-9]*$/.test(value); 
-		   }, 
-		   message: '请输入数字'
+		number: {
+			validator: function (value, param) {
+				return /^[0-9]+.?[0-9]*$/.test(value);
+			},
+			message: '请输入数字'
 		}
 	});
-	
-    page_init();
+
+	page_init();
 });
 function signout(){
 	window.location.href= "index.html" ;
@@ -21,41 +21,41 @@ function toAdd(){
 	$("input[name='isDisplay'][value='1']").prop("checked","checked");
 	$("input[name='isOffLine'][value='0']").prop("checked","checked");
 	$("input[name='isForce'][value='0']").prop("checked","checked");
-	$('#appType').combobox('setValue','0'); 
+	$('#appType').combobox('setValue','0');
 	// 弹出窗口
 	$('#dd').dialog({
-	    title: '增加资源',
-	    width: 500,
-	    height: 400,
-	    closed: false,
-	    cache: false,
-	    modal: true,
-	    onClose: function () {
-	    	$('#name').val("1");
-    	    $('#code').val("1");
-    	    $('#URL').val("1");
-    	    $('#status').val("1");
-	   },
-	    buttons:[{ //设置下方按钮数组  
-	           text:'保存',  
-	           iconCls:'icon-ok',  
-	           handler:function(){ 
-	        	   if($('#remark').val().length>200){
-	        		   alert("备注请输入200字以内")
-	        	   }else{
-	        		   var  ok=true;
-	 	           	  doAddOrUpdate(ok); 
-	        	   }
-	        	  
-	           }  
-	      },{  
-	           text:'关闭',
-	           iconCls:'icon-cancel',  
-	           handler:function(){  
-	         		$('#dd').dialog('close'); 
-	         		
-	           }  
-	      }]
+		title: '增加资源',
+		width: 500,
+		height: 400,
+		closed: false,
+		cache: false,
+		modal: true,
+		onClose: function () {
+			$('#name').val("1");
+			$('#code').val("1");
+			$('#URL').val("1");
+			$('#status').val("1");
+		},
+		buttons:[{ //设置下方按钮数组
+			text:'保存',
+			iconCls:'icon-ok',
+			handler:function(){
+				if($('#remark').val().length>200){
+					alert("备注请输入200字以内")
+				}else{
+					var  ok=true;
+					doAddOrUpdate(ok);
+				}
+
+			}
+		},{
+			text:'关闭',
+			iconCls:'icon-cancel',
+			handler:function(){
+				$('#dd').dialog('close');
+
+			}
+		}]
 	});
 	$('#dd').dialog('open'); //打开添加对话框
 	$('#dd').window('center');//使Dialog居中显示
@@ -76,8 +76,8 @@ function page_init(){
 		scrollbarSize:0,
 		striped : true,
 		border : true,
-		collapsible : false,//是否可折叠的 
-		fit : true,//自动大小 
+		collapsible : false,//是否可折叠的
+		fit : true,//自动大小
 		//sortName: 'code', 
 		//sortOrder: 'desc', 
 		remoteSort : false,
@@ -88,8 +88,8 @@ function page_init(){
 		pagination : true,//分页控件 
 		rownumbers : true,//行号 
 		onBeforeLoad:function(prm){
-			  prm.resourceSearch = $('#resourceSearch').val()
-			  $('#mainGrid').datagrid('clearChecked');
+			prm.resourceSearch = $('#resourceSearch').val()
+			$('#mainGrid').datagrid('clearChecked');
 		}
 	});
 	//设置分页控件 
@@ -103,43 +103,43 @@ function page_init(){
 		onSelectPage : function(pageNumber, pageSize) {
 			searchData(pageNumber, pageSize)
 		}
-  });
+	});
 }
 
 function searchData(pageNumber, pageSize){
-   var resourceName = $('#resourceSearch').val();
-   var resourceName2=$('#resourceSearch2').val();
+	var resourceName = $('#resourceSearch').val();
+	var resourceName2=$('#resourceSearch2').val();
 	var resourceName3=$('#resourceSearch3').val();
-   var select_Status	 = $('#select_Status').combobox('getValue').trim();
+	var select_Status	 = $('#select_Status').combobox('getValue').trim();
 	var dateKey = $('#datemer').datebox('getValue');
 	var dateKey2 = $('#datemer2').datebox('getValue');
-   $("#mainGrid").datagrid('getPager').pagination({pageSize : pageSize, pageNumber : pageNumber});//重置
-   $("#mainGrid").datagrid("loading"); //加屏蔽
-   $.ajax({
-       type : "POST",
-       dataType : "json",
-       url : "/getEsbLog",
-       data : {
-    	   'callName' : resourceName,
-		   'resName' : resourceName2,
-		   'message' : resourceName3,
-    	   'status' : select_Status,
-		   'dateKey':dateKey,
-		   'endtime':dateKey2,
-    	   'page' : pageNumber,
-   			'rows' : pageSize
-       },
-       success : function(data) {
-           $("#mainGrid").datagrid('loadData',data);
-           $("#mainGrid").datagrid("loaded"); //移除屏蔽
-    	   $('#mainGrid').datagrid('clearChecked');
-       },
-       error : function(err) {
-           $.messager.alert('操作提示', '获取信息失败...请联系管理员!', 'error');
-           $("mainGrid").datagrid("loaded"); //移除屏蔽
-    	   $('#mainGrid').datagrid('clearChecked');
-       }
-   });
+	$("#mainGrid").datagrid('getPager').pagination({pageSize : pageSize, pageNumber : pageNumber});//重置
+	$("#mainGrid").datagrid("loading"); //加屏蔽
+	$.ajax({
+		type : "POST",
+		dataType : "json",
+		url : "/getEsbLog",
+		data : {
+			'callName' : resourceName,
+			'resName' : resourceName2,
+			'message' : resourceName3,
+			'status' : select_Status,
+			'dateKey':dateKey,
+			'endtime':dateKey2,
+			'page' : pageNumber,
+			'rows' : pageSize
+		},
+		success : function(data) {
+			$("#mainGrid").datagrid('loadData',data);
+			$("#mainGrid").datagrid("loaded"); //移除屏蔽
+			$('#mainGrid').datagrid('clearChecked');
+		},
+		error : function(err) {
+			$.messager.alert('操作提示', '获取信息失败...请联系管理员!', 'error');
+			$("mainGrid").datagrid("loaded"); //移除屏蔽
+			$('#mainGrid').datagrid('clearChecked');
+		}
+	});
 }
 
 
@@ -160,7 +160,7 @@ function toUpdate(){
 	$('#resourceId').val(row.resourceId);
 	$('#name').val(row.name);
 	$('#code').val(row.code);
-	$('#status').combobox('setValue',row.status); 
+	$('#status').combobox('setValue',row.status);
 	$('#remark').val(row.remark);
 	$('#URL').val(row.url);
 	/* $(":radio[name='status'][value='" + row.status + "']").prop("checked", "checked");
@@ -171,36 +171,36 @@ function toUpdate(){
 	$('#isSure').val(row.isSure);
 	$('#remark').val(row.remark); */
 	$('#dd').dialog({
-	    title: '修改资源',
-	    width: 500,
-	    height: 400,
-	    closed: false,
-	    cache: false,
-	    modal: true,
-	    onClose: function () {
-	    	$('#name').val("1");
-    	    $('#code').val("1");
-    	    $('#URL').val("1");
-    	    $('#status').val("1");
-	   },
-	    buttons:[{ //设置下方按钮数组  
-	           text:'保存',  
-	           iconCls:'icon-ok',  
-	           handler:function(){
-	        	   if($('#remark').val().length>200){
-	        		   alert("备注请输入200字以内")
-	        	   }else{
-	        		   var ok=false;
-	        		   doAddOrUpdate(ok);
-	        	   }
-	           }  
-	      },{  
-	           text:'关闭',
-	           iconCls:'icon-cancel',  
-	           handler:function(){  
-	         		$('#dd').dialog('close'); 
-	           }  
-	      }]
+		title: '修改资源',
+		width: 500,
+		height: 400,
+		closed: false,
+		cache: false,
+		modal: true,
+		onClose: function () {
+			$('#name').val("1");
+			$('#code').val("1");
+			$('#URL').val("1");
+			$('#status').val("1");
+		},
+		buttons:[{ //设置下方按钮数组
+			text:'保存',
+			iconCls:'icon-ok',
+			handler:function(){
+				if($('#remark').val().length>200){
+					alert("备注请输入200字以内")
+				}else{
+					var ok=false;
+					doAddOrUpdate(ok);
+				}
+			}
+		},{
+			text:'关闭',
+			iconCls:'icon-cancel',
+			handler:function(){
+				$('#dd').dialog('close');
+			}
+		}]
 	});
 }
 
@@ -224,44 +224,44 @@ function doDeleteEntity(){
 	//alert(ids);
 	console.log(ids);
 	$.messager.confirm('提示','您确定禁用这'+rows.length+'条数据?',function(r){
-	    if (r){
-	    	$.ajax({
-	            type: "post",
-	            url: "/shuck/web/resource/doDeleteEntity",
-	            data: {ids:ids.join()},
-	            success: function(result) {
-	            	if(result.status == 'success'){
-	            		$.messager.alert('提示','删除成功,该资源已失效');
-	            		$('#mainGrid').datagrid('reload');
-	            		$('#mainGrid').datagrid('clearChecked');
-	            	} else {
-	            		$.messager.alert('提示','删除失败,请联系系统管理员');
-	            		$('#mainGrid').datagrid('reload');
-	            		$('#mainGrid').datagrid('clearChecked');
-	            	}
-	            	console.log(result);
-	            }
-	        });
-	    }
+		if (r){
+			$.ajax({
+				type: "post",
+				url: "/shuck/web/resource/doDeleteEntity",
+				data: {ids:ids.join()},
+				success: function(result) {
+					if(result.status == 'success'){
+						$.messager.alert('提示','删除成功,该资源已失效');
+						$('#mainGrid').datagrid('reload');
+						$('#mainGrid').datagrid('clearChecked');
+					} else {
+						$.messager.alert('提示','删除失败,请联系系统管理员');
+						$('#mainGrid').datagrid('reload');
+						$('#mainGrid').datagrid('clearChecked');
+					}
+					console.log(result);
+				}
+			});
+		}
 	});
 }
 function doAddOrUpdate(ok){
 	//alert($("#mainForm").form('validate'));
-	
+
 	if($("#mainForm").form('validate')){
 		if(ok){
 			$.ajax({
-		        type: "post",
-		        url: "/shuck/web/resource/validResourceCode",
-		        data: $("#mainForm").serialize(),
-		        success: function(result) {
-		        	if(result.status=='success'){
-		        		addResource();
-		        	}else{
-		        		$.messager.alert('提示','资源已存在!');
-		        	}
-		        }
-		    });
+				type: "post",
+				url: "/shuck/web/resource/validResourceCode",
+				data: $("#mainForm").serialize(),
+				success: function(result) {
+					if(result.status=='success'){
+						addResource();
+					}else{
+						$.messager.alert('提示','资源已存在!');
+					}
+				}
+			});
 		}else{
 			addResource();
 		}
@@ -269,25 +269,25 @@ function doAddOrUpdate(ok){
 }
 
 function addResource(){
-	 $.ajax({
-        type: "post",
-        url: "/shuck/web/resource/doSaveOrUpdateEntity",
-        data: $("#mainForm").serialize(),
-        success: function(result) {
-        	if(result.status == 'success'){
-        		$.messager.alert('提示','保存成功');
-        		//$("#mainForm").form('clear');
-        		
-        		$('#dd').dialog('close');
-        		//$('#mainGrid').datagrid('reload');
-        		 searchData(1,10);
-        		 $('#mainGrid').datagrid('clearChecked');
-        	} else {
-        		$.messager.alert('提示','保存失败,请联系系统管理员');
-        	}
-        	//console.log(result);
-	        }
-	 });
+	$.ajax({
+		type: "post",
+		url: "/shuck/web/resource/doSaveOrUpdateEntity",
+		data: $("#mainForm").serialize(),
+		success: function(result) {
+			if(result.status == 'success'){
+				$.messager.alert('提示','保存成功');
+				//$("#mainForm").form('clear');
+
+				$('#dd').dialog('close');
+				//$('#mainGrid').datagrid('reload');
+				searchData(1,10);
+				$('#mainGrid').datagrid('clearChecked');
+			} else {
+				$.messager.alert('提示','保存失败,请联系系统管理员');
+			}
+			//console.log(result);
+		}
+	});
 }
 
 function formatterData(val,row) {
@@ -307,18 +307,18 @@ function formatterDataForType(val,row) {
 }
 
 function p(s) {
-    return s < 10 ? '0' + s: s;
+	return s < 10 ? '0' + s: s;
 }
 
 function formatterDate2(val,row){
 	if (val != null) {
 		var date = new Date(val);
-		return date.getFullYear() + '-' 
-			   + p((date.getMonth() + 1)) + '-'
-			   + p(date.getDate()) + ' ' 
-			   + p(date.getHours()) + ':' 
-			   + p(date.getMinutes()) + ':' 
-			   + p(date.getSeconds());
+		return date.getFullYear() + '-'
+			+ p((date.getMonth() + 1)) + '-'
+			+ p(date.getDate()) + ' '
+			+ p(date.getHours()) + ':'
+			+ p(date.getMinutes()) + ':'
+			+ p(date.getSeconds());
 	}
 }
 
@@ -345,11 +345,11 @@ function addTr(){
 	$("#apptrRelease").show();
 	for(var i = 1; i < 16; i++){
 		if( $("#apptr"+i)){
-			$("#apptr"+i).show();  
+			$("#apptr"+i).show();
 		}
-	} 
-	$("#apptr1").hide();  
-	
+	}
+	$("#apptr1").hide();
+
 }
 
 function formatterDownLoad(val,row,index){
